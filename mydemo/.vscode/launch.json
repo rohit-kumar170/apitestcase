@@ -1,0 +1,14 @@
+{
+    "name": "Python: Django Test",
+    "type": "python",
+    "request": "launch",
+    "program": "${workspaceFolder}/manage.py",
+    "args": [
+        "test",
+        "api.tests.RegisterViewTestCase.test_register_user",
+        "--noinput"
+    ],
+    "django": true,
+    "console": "integratedTerminal",
+    "configurations": []
+}

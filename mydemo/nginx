@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    localhost 192.168.0.114;
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/your_domain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/your_domain.com/dev_selfsigned.key;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/rohit/Documents/programming/python/Project/practice/API/Project/mydemo;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/rohit/Documents/programming/python/Project/practice/API/Project/mydemo/gunicorn.sock;
+    }
+}

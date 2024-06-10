@@ -1,6 +1,9 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,7 +17,7 @@ SECRET_KEY = 'django-insecure-w1urm==l4vs5-2!tc@si7^nc5px^u9l*@04nie(q#u3k0-x0wb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -68,16 +71,27 @@ WSGI_APPLICATION = 'mydemo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':os.getenv('SECRET_DB'),
+        'USER':os.getenv('SECRET_USER'),
+        'PASSWORD':os.getenv('SECRET_PASS'),
+        'HOST':os.getenv('SECRET_HOST'),
+        'PORT':os.getenv('SECRET_PORT')
     },
-    'mydb': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'mydb.sqlite3',
-    },
-    'mydb2': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'mydb2.sqlite3',
+    'hackerdb1': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'hackerdb1',
+        'USER':os.getenv('SECRET_USER'),
+        'PASSWORD':os.getenv('SECRET_PASS'),
+        'HOST':os.getenv('SECRET_HOST'),
+        'PORT':os.getenv('SECRET_PORT')
+    },'hackerdb2': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER':os.getenv('SECRET_USER'),
+        'NAME':'hackerdb2',
+        'PASSWORD':os.getenv('SECRET_PASS'),
+        'HOST':os.getenv('SECRET_HOST'),
+        'PORT':os.getenv('SECRET_PORT')
     }
 }
 
@@ -90,7 +104,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
@@ -142,3 +156,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'api.CustomUser'
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
